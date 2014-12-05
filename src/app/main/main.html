@@ -1,0 +1,27 @@
+<div class="container">
+
+  <div ng-include="'components/navbar/navbar.html'"></div>
+
+  <h1>Here be editor</h1>
+  <button class="btn btn-mini" ng-click="toggleBold()">B</button>
+  <button class="btn btn-mini" ng-click="toggleItalic()">I</button>
+  <span class="dropdown" dropdown on-toggle="toggled(open)">
+    <a href class="dropdown-toggle" dropdown-toggle >Change font</a>
+    <ul class="dropdown-menu">
+      <li ng-repeat="font in fonts">
+      <a href ng-click="toggleFont('{{font.tag}}')"><span class="fontfamily-{{font.tag}}">{{font.name}}</span></a>
+      </li>
+    </ul>
+  </span>
+  <select ng-model="fontSize" ng-change="toggleSize()" ng-options="size for size in sizes"></select>
+  <br/>
+  <br/>
+  <div id="editor" contenteditable="true"><span class="fontfamily-cochise fontsize-20">foobar</span></div>
+
+  <hr>
+  <button class="btn btn-primary" ng-click="generateSVG()">Generate SVG</button>
+  <div class="footer">
+    <p>
+    </p>
+  </div>
+</div>

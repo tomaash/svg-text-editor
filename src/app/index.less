@@ -1,0 +1,64 @@
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+.thumbnail {
+  height: 200px;
+
+  img.pull-right {
+    width: 50px;
+  }
+}
+
+.generate-font-sizes(160);
+
+.generate-font-sizes(@n, @i: 1) when (@i =< @n) {
+  .fontsize-@{i} {
+    font-size: (@i * 1px);
+  }
+  .generate-font-sizes(@n, (@i + 1));
+}
+
+.fontfamily-checkpoint {
+  font-family: "Checkpoint Regular";
+}
+.fontfamily-cochise {
+  font-family: "Cochise Regular";
+}
+.fontfamily-kaleidoskop {
+  font-family: "Kaleidoskop Regular";
+}
+.fontfamily-lifetime {
+  font-family: "Lifetime Regular";
+}
+.fontfamily-olympiaheavy {
+  font-family: "Olympia-Heavy Regular";
+}
+.fontfamily-olympiamediumcond {
+  font-family: "Olympia-MediumCond Regular";
+}
+.fontfamily-sunflower {
+  font-family: "Sunflower Regular";
+}
+.fontfamily-tabascotwin {
+  font-family: "TabascoTwin Regular";
+}
+.fontfamily-times {
+    font-family: "Times";
+}
+.fontfamily-times_bold {
+    font-family: "Times-Bold";
+}
+.fontfamily-times_bold_italic { 
+    font-family: "Times-Bold Italic";
+}
+.fontfamily-times_italic {
+    font-family: "Times-Italic";
+}
+
+
+
+
