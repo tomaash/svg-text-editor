@@ -9,19 +9,33 @@
     <a href class="dropdown-toggle" dropdown-toggle >Change font</a>
     <ul class="dropdown-menu">
       <li ng-repeat="font in fonts">
-      <a href ng-click="toggleFont('{{font.tag}}')"><span class="fontfamily-{{font.tag}}">{{font.name}}</span></a>
+        <a href ng-click="toggleFont('{{font.tag}}')">
+          <span class="fontfamily-{{font.tag}}">{{font.name}}</span>
+        </a>
       </li>
     </ul>
   </span>
   <select ng-model="fontSize" ng-change="toggleSize()" ng-options="size for size in sizes"></select>
   <br/>
   <br/>
-  <div id="editor" contenteditable="true"><span class="fontfamily-cochise fontsize-20">foobar</span></div>
-
+  <div id="editor" contenteditable="true">
+    <span class="fontfamily-cochise fontsize-20">f</span>
+    <span class="fontfamily-cochise   fontsize-48">o</span>
+    <span class="fontfamily-cochise fontsize-20">o</span><div><font face="Cochise Regular"><span style="font-size: 20px; line-height: 22.8571434020996px;"><br></span></font></div><div><font face="Cochise Regular"><span style="font-size: 20px; line-height: 22.8571434020996px;"><br></span></font>
+    <div>
+      <span class="fontfamily-cochise fontsize-20">b</span>
+      <span class="fontfamily-cochise  fontsize-60">a</span>
+      <span class="fontfamily-cochise fontsize-20">r</span>
+    </div>
+    <div>
+      <span class="fontfamily-cochise fontsize-20">b</span>
+      <span class="fontfamily-cochise  fontsize-28">a</span>
+      <span class="fontfamily-cochise fontsize-20">z</span>
+    </div>
+  </div></div>
   <hr>
   <button class="btn btn-primary" ng-click="generateSVG()">Generate SVG</button>
   <div class="footer">
-    <p>
-    </p>
+    <p></p>
   </div>
 </div>

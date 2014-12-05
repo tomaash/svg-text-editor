@@ -83,38 +83,62 @@ angular.module('svgTextEditor')
         });
       }
       attrs.text = item.innerHTML;
-      console.log(attrs.text);
+      // if (item.tagName.toLowerCase()==='br') {
+      //   attrs.crlf = true;
+      // }
       return attrs;
     };
 
-    var traverseSpans = function(node, blocks, line) {
-      var toplevel = false;
-      if (!blocks.length && !line.length) {
-        toplevel = true;
-      }
+    // var traverseSpans = function(node, blocks, line) {
+    //   blocks = blocks || [];
+    //   line = line || [];
+    //   var toplevel = false;
+    //   if (!blocks.length && !line.length) {
+    //     toplevel = true;
+    //   }
+    //   var data = $(node).children();
+    //   var dirty = false;
+    //   data.each(function(index, item){
+    //     if (item.tagName.toLowerCase()==='div') {
+    //       blocks.push(line);
+    //       dirty = false;
+    //       line = [];
+    //       traverseSpans(item, blocks, line);
+    //       // return blocks;
+    //     } else {
+    //       line.push(convertSpan(item));
+    //       dirty = true;
+    //     }
+    //   });
+    //   if (toplevel) {
+    //     blocks.push(line);  
+    //   }
+    //   // return [blocks, line];
+    //   return blocks;
+    // };
+
+    var traverseSpans = function(node) {
+      var out = [];
       var data = $(node).children();
-      var dirty = false;
       data.each(function(index, item){
-        if (item.tagName.toLowerCase()==='div') {
-          blocks.push(line);
-          dirty = false;
-          line = [];
-          traverseSpans(item, blocks, line);
-          // return blocks;
+        if ($(item).children().length > 0) {
+          var more = traverseSpans(item);
+          if (out.length>0){
+            out[out.length-1].crlf = true;
+          }
+          out = out.concat(more);
         } else {
-          line.push(convertSpan(item));
-          dirty = true;
+          var one = convertSpan(item);
+          out.push(one);
         }
       });
-      if (toplevel) {
-        blocks.push(line);  
-      }
-      // return [blocks, line];
-      return blocks;
+      return out;
     };
 
+
     $scope.generateSVG = function() {
-      var traverse = traverseSpans($('#editor'), [], []);
+      var traverse = traverseSpans($('#editor'));
+
       console.log(traverse);
       // var data = $('#editor').children();
       // var spans = [];
