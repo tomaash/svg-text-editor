@@ -84,22 +84,30 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
     .pipe($.size());
 });
 
-gulp.task('images', function () {
-  return gulp.src('src/assets/images/**/*')
-    .pipe($.cache($.imagemin({
-      optimizationLevel: 3,
-      progressive: true,
-      interlaced: true
-    })))
-    .pipe(gulp.dest('dist/assets/images'))
+// gulp.task('images', function () {
+//   return gulp.src('src/assets/images/**/*')
+//     .pipe($.cache($.imagemin({
+//       optimizationLevel: 3,
+//       progressive: true,
+//       interlaced: true
+//     })))
+//     .pipe(gulp.dest('dist/assets/images'))
+//     .pipe($.size());
+// });
+
+gulp.task('fonts', function () {
+  return gulp.src('src/assets/fonts/**')
+    // .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
+    // .pipe($.flatten())
+    .pipe(gulp.dest('dist/assets/fonts'))
     .pipe($.size());
 });
 
-gulp.task('fonts', function () {
-  return gulp.src($.mainBowerFiles())
-    .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
-    .pipe($.flatten())
-    .pipe(gulp.dest('dist/fonts'))
+gulp.task('hackvendor', function () {
+  return gulp.src('src/scripts/**')
+    // .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
+    // .pipe($.flatten())
+    .pipe(gulp.dest('dist/scripts'))
     .pipe($.size());
 });
 
@@ -113,4 +121,4 @@ gulp.task('clean', function (done) {
   $.del(['.tmp', 'dist'], done);
 });
 
-gulp.task('build', ['html', 'images', 'fonts', 'misc']);
+gulp.task('build', ['html', 'fonts', 'misc']);

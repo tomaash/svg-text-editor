@@ -19,5 +19,19 @@
   },
   "resolutions": {
     "angular": "1.3.x"
+  },
+  "overrides": {
+    "rangy": {
+      "main": [
+        "rangy-core.js",
+        "rangy-cssclassapplier.js"
+      ]
+    },
+   "Rangy-bower": {
+      "main": [
+        "rangy-core.js",
+        "rangy-cssclassapplier.js"
+      ]
+    }
   }
 }

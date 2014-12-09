@@ -145,7 +145,7 @@ angular.module('svgTextEditor')
         spans: []
       };
       var line = angular.copy(lineTemplate);
-      traverse.forEach(function(elm, idx) {
+      traverse.forEach(function(elm) {
         if (elm.text === "") {
           elm.text = "";
         }
