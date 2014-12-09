@@ -10,6 +10,8 @@ angular.module('svgTextEditor')
       normalize: true
     });
     $scope.fontDropdownOpened = false;
+    $scope.editMode = false;
+
     $scope.fonts = [{
       name: "Checkpoint",
       tag: "checkpoint"
@@ -47,6 +49,9 @@ angular.module('svgTextEditor')
       document.execCommand('italic', false, null);
     };
 
+    $scope.toggleEditMode = function() {
+      $scope.editMode = true;
+    };
 
     $scope.toggleSize = function() {
       var cssApplier = rangy.createCssClassApplier('fontsize-' + $scope.fontSize, {
@@ -159,6 +164,7 @@ angular.module('svgTextEditor')
       if (line.spans.length > 0) {
         $scope.lines.push(line);
       }
+      $scope.editMode = false;
       setTimeout($scope.fixTspans.bind(this), 0);
     };
 
