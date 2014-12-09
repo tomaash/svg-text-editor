@@ -1,12 +1,13 @@
 <div class="container">
 
-  <div ng-include="'components/navbar/navbar.html'"></div>
+  <!-- <div ng-include="'components/navbar/navbar.html'"></div> -->
 
-  <h1>Here be editor</h1>
-  <button class="btn btn-mini" ng-click="toggleBold()">B</button>
+  <h1>Rich text editor with SVG export</h1>
+  <br>
+<!--   <button class="btn btn-mini" ng-click="toggleBold()">B</button>
   <button class="btn btn-mini" ng-click="toggleItalic()">I</button>
-  <span class="dropdown" dropdown on-toggle="toggled(open)">
-    <a href class="dropdown-toggle" dropdown-toggle >Change font</a>
+ -->  <span class="dropdown" dropdown on-toggle="toggled(open)">
+    <a href class="btn btn-default dropdown-toggle" dropdown-toggle >Change font</a>
     <ul class="dropdown-menu">
       <li ng-repeat="font in fonts">
         <a href ng-click="toggleFont('{{font.tag}}')">
@@ -15,16 +16,19 @@
       </li>
     </ul>
   </span>
-  <select ng-model="fontSize" ng-change="toggleSize()" ng-options="size for size in sizes"></select>
+  &nbsp; Select size: <select ng-model="fontSize" ng-change="toggleSize()" ng-options="size for size in sizes"></select>
+  &nbsp; <button class="btn btn-primary" ng-click="generateSVG()">Generate SVG</button>
   <br/>
-  <br/>
-  <div id="editor" contenteditable="true">
-    <span class="fontfamily-cochise fontsize-20">f</span>
+
+<!--   <span class="fontfamily-cochise fontsize-20">f</span>
     <span class="fontfamily-cochise   fontsize-48">o</span>
-    <span class="fontfamily-cochise fontsize-20">o</span><div><font face="Cochise Regular"><span style="font-size: 20px; line-height: 22.8571434020996px;"><br></span></font></div><div><font face="Cochise Regular"><span style="font-size: 20px; line-height: 22.8571434020996px;"><br></span></font>
+    <span class="fontfamily-cochise fontsize-20">o</span><div>
+    <font face="Cochise Regular">
+    <span style="font-size: 20px; line-height: 22.8571434020996px;"><br></span>
+     </font></div><div><font face="Cochise Regular"><span style="font-size: 20px; line-height: 22.8571434020996px;"><br></span></font>
     <div>
       <span class="fontfamily-cochise fontsize-20">b</span>
-      <span class="fontfamily-cochise  fontsize-60">a</span>
+      <span class="fontfamily-cochise  fontsize-36">a</span>
       <span class="fontfamily-cochise fontsize-20">r</span>
     </div>
     <div>
@@ -32,10 +36,22 @@
       <span class="fontfamily-cochise  fontsize-28">a</span>
       <span class="fontfamily-cochise fontsize-20">z</span>
     </div>
-  </div></div>
+  </div>
+ -->
+
+ <!-- <span class="fontfamily-cochise fontsize-20">Please type here</span> -->
+  
   <hr>
-  <button class="btn btn-primary" ng-click="generateSVG()">Generate SVG</button>
-  <div class="footer">
-    <p></p>
+  <div id="editor" contenteditable="true"><span class="fontfamily-cochise fontsize-20">I </span><span class="fontsize-20 fontfamily-kaleidoskop">can</span><span class="fontfamily-cochise fontsize-20"> </span><span class="fontsize-20 fontfamily-olympiaheavy">have&nbsp;</span><div><span class="fontfamily-cochise  fontsize-48">multiline</span></div><div><span class="fontfamily-tabascotwin fontsize-20">text</span></div><div><span class="fontfamily-cochise fontsize-20">with </span><span class="fontfamily-lifetime fontsize-68">different</span></div><div><span class="fontfamily-cochise  fontsize-68">f</span><span class="fontsize-68 fontfamily-olympiamediumcond">o</span><span class="fontsize-68 fontfamily-kaleidoskop">n</span><span class="fontsize-68 fontfamily-checkpoint">t</span><span class="fontsize-68 fontfamily-sunflower">s</span><span class="fontfamily-cochise fontsize-20"> and </span><span class="fontfamily-cochise  fontsize-100">s</span><span class="fontfamily-cochise   fontsize-68">i</span><span class="fontfamily-cochise    fontsize-24">z</span><span class="fontfamily-cochise   fontsize-80">e</span><span class="fontfamily-cochise   fontsize-36">s</span></div></div>
+  <hr>
+  
+  <div>
+  <svg class="svgcontainer" id="svgoutput" xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+      <text xml:space="preserve" ng-attr-y="{{line.data.dy}}" x="0" ng-repeat="line in lines" ng-attr-style="visibility:{{line.data.visible && 'visible' || 'hidden'}};"><tspan class="fontfamily-{{part.fontfamily}} fontsize-{{part.fontsize}}" ng-repeat="part in line.spans">{{part.text}}</tspan>
+    </text>
+  </svg>
+  </div>
+  <div class="footer"><p></p>
   </div>
 </div>

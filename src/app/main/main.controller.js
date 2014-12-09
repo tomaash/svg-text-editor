@@ -1,50 +1,43 @@
 'use strict';
 
 angular.module('svgTextEditor')
-  .controller('MainCtrl', function ($scope) {
-    $scope.sizes = [10,12,14,18,20,24,28,36,48,60];
-    var fontSizeRemover = rangy.createCssClassApplier('fontsize-\\d{1,3}\\s*', {normalize: true});
-    var fontFamilyRemover = rangy.createCssClassApplier('fontfamily-[^-]+\\s*', {normalize: true});
-    $scope.fontSize = 10;
+  .controller('MainCtrl', function($scope) {
+    $scope.sizes = [10, 12, 14, 18, 20, 24, 28, 36, 48, 60, 68, 80, 100, 148];
+    var fontSizeRemover = rangy.createCssClassApplier('fontsize-\\d{1,3}\\s*', {
+      normalize: true
+    });
+    var fontFamilyRemover = rangy.createCssClassApplier('fontfamily-[^-]+\\s*', {
+      normalize: true
+    });
     $scope.fontDropdownOpened = false;
-    $scope.fonts =  [
-      {
-        name: "Checkpoint",
-        tag: "checkpoint"
-      },
-      {
-        name: "Cochise",
-        tag: "cochise"
-      },
-      {
-        name: "Kaleidoskop",
-        tag: "kaleidoskop"
-      },
-      {
-        name: "Lifetime",
-        tag: "lifetime"
-      },
-      {
-        name: "Olympia-Heavy",
-        tag: "olympiaheavy"
-      },
-      {
-        name: "Olympia-MediumCond",
-        tag: "olympiamediumcond"
-      },
-      {
-        name: "Sunflower",
-        tag: "sunflower"
-      },
-      {
-        name: "TabascoTwin",
-        tag: "tabascotwin"
-      },
-      {
-        name: "Times",
-        tag: "times"
-      }
-    ];
+    $scope.fonts = [{
+      name: "Checkpoint",
+      tag: "checkpoint"
+    }, {
+      name: "Cochise",
+      tag: "cochise"
+    }, {
+      name: "Kaleidoskop",
+      tag: "kaleidoskop"
+    }, {
+      name: "Lifetime",
+      tag: "lifetime"
+    }, {
+      name: "Olympia-Heavy",
+      tag: "olympiaheavy"
+    }, {
+      name: "Olympia-MediumCond",
+      tag: "olympiamediumcond"
+    }, {
+      name: "Sunflower",
+      tag: "sunflower"
+    }, {
+      name: "TabascoTwin",
+      tag: "tabascotwin"
+    }, {
+      name: "Times",
+      tag: "times"
+    }];
 
     $scope.toggleBold = function() {
       document.execCommand('bold', false, null);
@@ -56,14 +49,19 @@ angular.module('svgTextEditor')
 
 
     $scope.toggleSize = function() {
-      var cssApplier = rangy.createCssClassApplier('fontsize-'+$scope.fontSize, {normalize: true});
+      var cssApplier = rangy.createCssClassApplier('fontsize-' + $scope.fontSize, {
+        normalize: true
+      });
       fontSizeRemover.undoToSelection();
       cssApplier.applyToSelection();
+      $scope.fontSize = null;
     };
 
     $scope.toggleFont = function(family) {
       console.log(family);
-      var cssApplier = rangy.createCssClassApplier('fontfamily-'+family, {normalize: true});
+      var cssApplier = rangy.createCssClassApplier('fontfamily-' + family, {
+        normalize: true
+      });
       fontFamilyRemover.undoToSelection();
       cssApplier.applyToSelection();
     };
@@ -77,12 +75,12 @@ angular.module('svgTextEditor')
       var attrs = {};
       if (item.className) {
         var classes = item.className.split(/\s+/);
-        classes.forEach(function(c){
+        classes.forEach(function(c) {
           var vals = c.split('-');
-          attrs[vals[0]]=vals[1];
+          attrs[vals[0]] = vals[1];
         });
       }
-      attrs.text = item.innerHTML;
+      attrs.text = item.innerHTML.replace(/&nbsp;/g, " ");
       // if (item.tagName.toLowerCase()==='br') {
       //   attrs.crlf = true;
       // }
@@ -120,11 +118,11 @@ angular.module('svgTextEditor')
     var traverseSpans = function(node) {
       var out = [];
       var data = $(node).children();
-      data.each(function(index, item){
+      data.each(function(index, item) {
         if ($(item).children().length > 0) {
           var more = traverseSpans(item);
-          if (out.length>0){
-            out[out.length-1].crlf = true;
+          if (out.length > 0) {
+            out[out.length - 1].crlf = true;
           }
           out = out.concat(more);
         } else {
@@ -138,41 +136,48 @@ angular.module('svgTextEditor')
 
     $scope.generateSVG = function() {
       var traverse = traverseSpans($('#editor'));
-
-      console.log(traverse);
-      // var data = $('#editor').children();
-      // var spans = [];
-      // traverse.forEach(function(elm, idx){
-      //   console.log(elm);
-      //   var attrs = {};
-      //   if (elm.className) {
-      //     var classes = elm.className.split(/\s+/);
-      //     classes.forEach(function(c){
-      //       var vals = c.split('-');
-      //       attrs[vals[0]]=vals[1];
-      //     });
-      //   }
-      //   attrs.text = elm.innerHTML;
-      //   spans.push(attrs);
-      // });
-      // console.log(spans);
+      $scope.lines = [];
+      var lineTemplate = {
+        data: {
+          visible: false,
+          dy: 60
+        },
+        spans: []
+      };
+      var line = angular.copy(lineTemplate);
+      traverse.forEach(function(elm, idx) {
+        if (elm.text === "") {
+          elm.text = "";
+        }
+        line.spans.push(elm);
+        console.log(elm);
+        if (elm.crlf) {
+          $scope.lines.push(line);
+          line = angular.copy(lineTemplate);
+        }
+      });
+      if (line.spans.length > 0) {
+        $scope.lines.push(line);
+      }
+      setTimeout($scope.fixTspans.bind(this), 0);
     };
+
+    $scope.fixTspans = function() {
+      console.log("fix!");
+      $("#svgoutput").children().each(function(i, el) {
+        var bbox = el.getBBox();
+        if (i === 0) {
+          $scope.lines[0].data.dy = bbox.height;
+        }
+        if (i > 0) {
+          console.log(bbox);
+          $scope.lines[i].data.dy = $scope.lines[i - 1].data.dy + bbox.height;
+        }
+        $scope.lines[i].data.visible = true;
+      });
+      $scope.$apply();
+      console.log($scope.lines);
+    };
+
+    $scope.generateSVG();
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

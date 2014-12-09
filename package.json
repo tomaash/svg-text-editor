@@ -40,5 +40,8 @@
   },
   "engines": {
     "node": ">=0.10.0"
-  }
+  },
+  "scripts": {
+    "postinstall": "bower install && gulp build"
+  },
 }

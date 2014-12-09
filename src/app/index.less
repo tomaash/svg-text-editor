@@ -13,6 +13,11 @@
   }
 }
 
+.svgcontainer {
+  height: 800px;
+  width: 900px;
+}
+
 .generate-font-sizes(160);
 
 .generate-font-sizes(@n, @i: 1) when (@i =< @n) {
@@ -20,6 +25,15 @@
     font-size: (@i * 1px);
   }
   .generate-font-sizes(@n, (@i + 1));
+}
+
+.generate-font-sizessvg(160);
+
+.generate-font-sizessvg(@n, @i: 1) when (@i =< @n) {
+  .fontsizesvg-@{i} {
+    font-size: @i;
+  }
+  .generate-font-sizessvg(@n, (@i + 1));
 }
 
 .fontfamily-checkpoint {
