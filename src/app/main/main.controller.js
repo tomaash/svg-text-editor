@@ -3,14 +3,14 @@
 angular.module('svgTextEditor')
   .controller('MainCtrl', function($scope) {
     $scope.sizes = [10, 12, 14, 18, 20, 24, 28, 36, 48, 60, 68, 80, 100, 148];
-    var fontSizeRemover = rangy.createCssClassApplier('fontsize-\\d{1,3}\\s*', {
+    var fontSizeRemover = rangy.createCssClassApplier('fontsize_\\d{1,3}\\s*', {
       normalize: true
     });
-    var fontFamilyRemover = rangy.createCssClassApplier('fontfamily-[^-]+\\s*', {
+    var fontFamilyRemover = rangy.createCssClassApplier('fontfamily_[^_]+\\s*', {
       normalize: true
     });
     $scope.fontDropdownOpened = false;
-    $scope.editMode = false;
+
 
     $scope.fonts = [{
       name: "Checkpoint",
@@ -26,10 +26,10 @@ angular.module('svgTextEditor')
       tag: "lifetime"
     }, {
       name: "Olympia-Heavy",
-      tag: "olympiaheavy"
+      tag: "olympia-heavy"
     }, {
       name: "Olympia-MediumCond",
-      tag: "olympiamediumcond"
+      tag: "olympia-mediumcond"
     }, {
       name: "Sunflower",
       tag: "sunflower"
@@ -54,7 +54,7 @@ angular.module('svgTextEditor')
     };
 
     $scope.toggleSize = function() {
-      var cssApplier = rangy.createCssClassApplier('fontsize-' + $scope.fontSize, {
+      var cssApplier = rangy.createCssClassApplier('fontsize_' + $scope.fontSize, {
         normalize: true
       });
       fontSizeRemover.undoToSelection();
@@ -64,7 +64,7 @@ angular.module('svgTextEditor')
 
     $scope.toggleFont = function(family) {
       console.log(family);
-      var cssApplier = rangy.createCssClassApplier('fontfamily-' + family, {
+      var cssApplier = rangy.createCssClassApplier('fontfamily_' + family, {
         normalize: true
       });
       fontFamilyRemover.undoToSelection();
@@ -81,7 +81,7 @@ angular.module('svgTextEditor')
       if (item.className) {
         var classes = item.className.split(/\s+/);
         classes.forEach(function(c) {
-          var vals = c.split('-');
+          var vals = c.split('_');
           attrs[vals[0]] = vals[1];
         });
       }
@@ -138,6 +138,53 @@ angular.module('svgTextEditor')
       return out;
     };
 
+    var attachPasteHandler = function() {
+      $('#editor').on('paste', function(e) {
+        // Hard to make this work, does not divide elements
+        // console.log(e.target);
+        // var text = e.originalEvent.clipboardData.getData('Text');
+        // var prev = $(e.target);
+        // console.log(text);
+        // e.preventDefault();
+        // prev.after('<span class=' + prev.attr('class') + '>' + text + '</span>');
+        // console.log(e.originalEvent.clipboardData.getData('Text'));
+
+        // var element = this;
+
+        setTimeout(function() {
+
+          // Remove all manual styling from paste
+          // var text = $(element).html();
+          // text = text.replace(/style="[^"]+"/g);
+          // $(element).html(text);
+
+          // Remove nested spans
+          var multispan = $("#editor span > span").parent();
+          var children = multispan.children();
+          multispan.replaceWith(children);
+
+          // Remove styles
+          var styles = $("#editor [style]");
+          styles.each(function(idx, elm) {
+            console.log(elm);
+            var fam,siz;
+            var span = $(elm);
+            var font = span.css('font-family');
+            var size = span.css('font-size');
+            if (font) {
+              fam = font.replace(/'/g, '').split(" ")[0].toLowerCase();
+            }
+            if (size) {
+              siz = parseInt(size, 10);
+            }
+            console.log(fam);
+            console.log(siz);
+            span.removeAttr('style');
+            span.attr('class', "fontfamily_" + fam + " fontsize_" + siz);
+          });
+        }, 0);
+      });
+    };
 
     $scope.generateSVG = function() {
       var traverse = traverseSpans($('#editor'));
@@ -186,4 +233,8 @@ angular.module('svgTextEditor')
     };
 
     $scope.generateSVG();
+    attachPasteHandler();
+
+    $scope.editMode = true;
+
   });

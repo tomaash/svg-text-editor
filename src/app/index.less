@@ -34,7 +34,7 @@ h1 {
 .generate-font-sizes(160);
 
 .generate-font-sizes(@n, @i: 1) when (@i =< @n) {
-  .fontsize-@{i} {
+  .fontsize_@{i} {
     font-size: (@i * 1px);
   }
   .generate-font-sizes(@n, (@i + 1));
@@ -43,46 +43,46 @@ h1 {
 .generate-font-sizessvg(160);
 
 .generate-font-sizessvg(@n, @i: 1) when (@i =< @n) {
-  .fontsizesvg-@{i} {
+  .fontsizesvg_@{i} {
     font-size: @i;
   }
   .generate-font-sizessvg(@n, (@i + 1));
 }
 
-.fontfamily-checkpoint {
+.fontfamily_checkpoint {
   font-family: "Checkpoint Regular";
 }
-.fontfamily-cochise {
+.fontfamily_cochise {
   font-family: "Cochise Regular";
 }
-.fontfamily-kaleidoskop {
+.fontfamily_kaleidoskop {
   font-family: "Kaleidoskop Regular";
 }
-.fontfamily-lifetime {
+.fontfamily_lifetime {
   font-family: "Lifetime Regular";
 }
-.fontfamily-olympiaheavy {
+.fontfamily_olympia-heavy {
   font-family: "Olympia-Heavy Regular";
 }
-.fontfamily-olympiamediumcond {
+.fontfamily_olympia-mediumcond {
   font-family: "Olympia-MediumCond Regular";
 }
-.fontfamily-sunflower {
+.fontfamily_sunflower {
   font-family: "Sunflower Regular";
 }
-.fontfamily-tabascotwin {
+.fontfamily_tabascotwin {
   font-family: "TabascoTwin Regular";
 }
-.fontfamily-times {
+.fontfamily_times {
     font-family: "Times";
 }
-.fontfamily-times_bold {
+.fontfamily_times-bold {
     font-family: "Times-Bold";
 }
-.fontfamily-times_bold_italic { 
+.fontfamily_times-bold-italic { 
     font-family: "Times-Bold Italic";
 }
-.fontfamily-times_italic {
+.fontfamily_times-italic {
     font-family: "Times-Italic";
 }
 
