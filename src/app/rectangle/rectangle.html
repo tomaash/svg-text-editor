@@ -5,11 +5,15 @@
 	ng-mousedown="mouseDown($event)"
 	ng-mouseup="mouseUp($event)"
 	ng-mousemove="mouseMove($event)"
+	ng-click="mouseClick($event)"
+
 	height="400" 
 	width="400" 
 	xmlns="http://www.w3.org/2000/svg" 
 	xmlns:xlink="http://www.w3.org/1999/xlink">
-	<rect 
+	<rect
+		data-type="rectangle" 
+		data-id="123"
 		ng-attr-x="{{rect.x}}" 
 		ng-attr-y="{{rect.y}}" 
 		ng-attr-width="{{rect.width}}" 
@@ -18,6 +22,35 @@
 		ng-attr-stroke-width="{{rect['stroke-width']}}" 
 		ng-attr-stroke="{{rect.stroke}}">
 	</rect>
+	<rect
+		data-type="resize"
+		data-id="789"
+		data-parent="123" 
+		fill="white"
+		fill-opacity="0"
+		ng-attr-x="{{resizeTool.x}}" 
+		ng-attr-y="{{resizeTool.y}}" 
+		ng-attr-width="{{resizeTool.width}}" 
+		ng-attr-height="{{resizeTool.height}}" 
+		ng-attr-stroke-width="{{resizeTool['stroke-width']}}" 
+		ng-attr-stroke="{{resizeTool.stroke}}"
+		ng-attr-visibility="{{toolState.visibility}}">
+	</rect>
+	<circle
+		data-type="rotate"
+		data-id="456"
+		data-parent="123" 
+		fill="white"
+		fill-opacity="0"
+		r="7" 
+		ng-attr-cx="{{rotateTool.cx}}" 
+		ng-attr-cy="{{rotateTool.cy}}" 
+		ng-attr-fill="{{rotateTool.fill}}" 
+		ng-attr-stroke-width="{{rotateTool['stroke-width']}}" 
+		ng-attr-stroke="{{rotateTool.stroke}}"
+		ng-attr-visibility="{{toolState.visibility}}">
+	</circle>
+
 </svg>
 
 <div>

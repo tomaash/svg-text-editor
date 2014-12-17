@@ -12,15 +12,42 @@ angular.module('svgTextEditor')
       'stroke-width': 10
     };
 
+    $scope.resizeTool = {
+      x: 110,
+      y: 110,
+      width: 10,
+      height: 10,
+      stroke: 'black',
+      'stroke-width': 2
+    };
+
+    $scope.rotateTool = {
+      cx: 60,
+      cy: 130,
+      width: 10,
+      height: 10,
+      stroke: 'black',
+      'stroke-width': 2
+    };
+
+
+
     var MOVE_STEP = 5;
     var SCALE_STEP = 1.5;
 
     $scope.mouseState = {
       down: false,
+      moving: false,
       startX: 0,
       startY: 0,
       currentX: 0,
       currentY: 0,
+    };
+
+    $scope.toolState = {
+      on: false,
+      visibility: 'hidden',
+      mode: false
     };
 
     $scope.mouseDelta = {
@@ -29,8 +56,8 @@ angular.module('svgTextEditor')
     };
 
     $scope.updateDelta = function() {
-        $scope.mouseDelta.x = $scope.mouseState.currentX - $scope.mouseState.startX;
-        $scope.mouseDelta.y = $scope.mouseState.currentY - $scope.mouseState.startY;
+      $scope.mouseDelta.x = $scope.mouseState.currentX - $scope.mouseState.startX;
+      $scope.mouseDelta.y = $scope.mouseState.currentY - $scope.mouseState.startY;
     };
 
     $scope.setPosition = function(e, startFlag) {
@@ -71,22 +98,60 @@ angular.module('svgTextEditor')
     };
 
     $scope.mouseDown = function(e) {
-      $scope.mouseState.down = true;
-      $scope.setPosition(e, true);
-      $scope.oldRect = angular.copy($scope.rect);
+      if (e.target.dataset.type === 'rectangle') {
+        $scope.mouseState.down = true;
+        $scope.setPosition(e, true);
+        $scope.oldRect = angular.copy($scope.rect);
+      }
     };
-    $scope.mouseUp = function() {
+    
+    $scope.mouseUp = function(e) {
+      if ($scope.mouseState.moving) {
+        $scope.mouseState.noClick = true;
+      }
+      $scope.mouseState.moving = false;
       $scope.mouseState.down = false;
     };
     $scope.mouseMove = function(e) {
       if ($scope.mouseState.down) {
+        $scope.mouseState.moving = true;
         $scope.setPosition(e);
         $scope.updateDelta(e);
         $scope.moveToDelta();
+        if ($scope.toolState.on) {
+          $scope.updateToolPositions();
+        }
       }
     };
+    $scope.updateToolPositions = function() {
+      $scope.resizeTool.x = $scope.rect.x + $scope.rect.width;
+      $scope.resizeTool.y = $scope.rect.y + $scope.rect.height;
+      $scope.rotateTool.cx = $scope.rect.x + $scope.rect.width / 2;
+      $scope.rotateTool.cy = $scope.rect.y + $scope.rect.height + 20;
+    };
 
-
-
+    $scope.showTools = function() {
+      $scope.toolState.on = true;
+      $scope.toolState.visibility = 'visible';
+      $scope.updateToolPositions();
+    };
+    $scope.hideTools = function() {
+      $scope.toolState.on = false;
+      $scope.toolState.visibility = 'hidden';
+    };
+    $scope.mouseClick = function(e) {
+      if ($scope.mouseState.noClick) {
+        $scope.mouseState.noClick = false;
+        return;
+      }
+      console.log(e.target.dataset);
+      if (e.target.dataset.type === 'rectangle') {
+        if ($scope.toolState.on) {
+          $scope.hideTools();
+        } else {
+          $scope.showTools();
+        }
+      }
+    };
 
   });
