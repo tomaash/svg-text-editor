@@ -12,7 +12,8 @@
 	xmlns="http://www.w3.org/2000/svg" 
 	xmlns:xlink="http://www.w3.org/1999/xlink">
 	<rect
-		data-type="rectangle" 
+		data-type="object"
+		data-shape="rectangle"  
 		data-id="123"
 		ng-attr-x="{{rect.x}}" 
 		ng-attr-y="{{rect.y}}" 
@@ -23,7 +24,8 @@
 		ng-attr-stroke="{{rect.stroke}}">
 	</rect>
 	<rect
-		data-type="resize"
+		data-type="tool"
+		data-mode="resize"
 		data-id="789"
 		data-parent="123" 
 		fill="white"
@@ -37,7 +39,8 @@
 		ng-attr-visibility="{{toolState.visibility}}">
 	</rect>
 	<circle
-		data-type="rotate"
+		data-type="tool"
+		data-mode="rotate"
 		data-id="456"
 		data-parent="123" 
 		fill="white"
@@ -72,5 +75,6 @@ Current X: {{mouseState.currentX}} <br>
 Current Y: {{mouseState.currentY}} <br>
 dx: {{mouseDelta.x}} <br>
 dy: {{mouseDelta.y}} <br>
+mode: {{toolState.mode}} <br>
 </div>
 </div>

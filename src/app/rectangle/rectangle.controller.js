@@ -73,6 +73,10 @@ angular.module('svgTextEditor')
       $scope.rect.x = $scope.oldRect.x + $scope.mouseDelta.x;
       $scope.rect.y = $scope.oldRect.y + $scope.mouseDelta.y;
     };
+    $scope.resizeToDelta = function() {
+      $scope.rect.width = $scope.oldRect.width + $scope.mouseDelta.x;
+      $scope.rect.height = $scope.oldRect.height + $scope.mouseDelta.y;
+    };
 
     $scope.moveUp = function() {
       $scope.rect.y -= MOVE_STEP;
@@ -98,16 +102,20 @@ angular.module('svgTextEditor')
     };
 
     $scope.mouseDown = function(e) {
-      if (e.target.dataset.type === 'rectangle') {
+      if (e.target.dataset.type) {
         $scope.mouseState.down = true;
         $scope.setPosition(e, true);
         $scope.oldRect = angular.copy($scope.rect);
+      } 
+      if (e.target.dataset.type === 'tool') {
+        $scope.toolState.mode = e.target.dataset.mode;
       }
     };
-    
+
     $scope.mouseUp = function(e) {
       if ($scope.mouseState.moving) {
         $scope.mouseState.noClick = true;
+        $scope.hideTools();
       }
       $scope.mouseState.moving = false;
       $scope.mouseState.down = false;
@@ -117,7 +125,12 @@ angular.module('svgTextEditor')
         $scope.mouseState.moving = true;
         $scope.setPosition(e);
         $scope.updateDelta(e);
-        $scope.moveToDelta();
+        
+        if (!$scope.toolState.mode) {
+          $scope.moveToDelta();  
+        } else if ($scope.toolState.mode === 'resize') {
+          $scope.resizeToDelta();                    
+        } 
         if ($scope.toolState.on) {
           $scope.updateToolPositions();
         }
@@ -138,6 +151,7 @@ angular.module('svgTextEditor')
     $scope.hideTools = function() {
       $scope.toolState.on = false;
       $scope.toolState.visibility = 'hidden';
+      $scope.toolState.mode = false;
     };
     $scope.mouseClick = function(e) {
       if ($scope.mouseState.noClick) {
@@ -145,7 +159,10 @@ angular.module('svgTextEditor')
         return;
       }
       console.log(e.target.dataset);
-      if (e.target.dataset.type === 'rectangle') {
+      if (!e.target.dataset.type) {
+        $scope.hideTools();
+      }
+      if (e.target.dataset.type === 'object') {
         if ($scope.toolState.on) {
           $scope.hideTools();
         } else {
