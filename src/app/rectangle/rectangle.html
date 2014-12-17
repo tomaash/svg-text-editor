@@ -1,0 +1,43 @@
+<div class="container">
+
+	<h1>The Rectangle {{message}}</h1>
+	<svg 
+	ng-mousedown="mouseDown($event)"
+	ng-mouseup="mouseUp($event)"
+	ng-mousemove="mouseMove($event)"
+	height="400" 
+	width="400" 
+	xmlns="http://www.w3.org/2000/svg" 
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+	<rect 
+		ng-attr-x="{{rect.x}}" 
+		ng-attr-y="{{rect.y}}" 
+		ng-attr-width="{{rect.width}}" 
+		ng-attr-height="{{rect.height}}" 
+		ng-attr-fill="{{rect.fill}}" 
+		ng-attr-stroke-width="{{rect['stroke-width']}}" 
+		ng-attr-stroke="{{rect.stroke}}">
+	</rect>
+</svg>
+
+<div>
+	<button class="btn btn-mini" ng-click="moveUp()">UP</button>
+	<button class="btn btn-mini" ng-click="moveDown()">DOWN</button>
+	<button class="btn btn-mini" ng-click="moveLeft()">LEFT</button>
+	<button class="btn btn-mini" ng-click="moveRight()">RIGHT</button>
+</div>
+<br>
+<div>
+	<button class="btn btn-mini" ng-click="scaleUp()">SCALE UP</button>
+	<button class="btn btn-mini" ng-click="scaleDown()">SCALE DOWN</button>
+</div>
+<br>
+<div>
+Start X: {{mouseState.startX}} <br>
+Start Y: {{mouseState.startY}} <br>
+Current X: {{mouseState.currentX}} <br>
+Current Y: {{mouseState.currentY}} <br>
+dx: {{mouseDelta.x}} <br>
+dy: {{mouseDelta.y}} <br>
+</div>
+</div>

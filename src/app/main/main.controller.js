@@ -3,10 +3,10 @@
 angular.module('svgTextEditor')
   .controller('MainCtrl', function($scope) {
     $scope.sizes = [10, 12, 14, 18, 20, 24, 28, 36, 48, 60, 68, 80, 100, 148];
-    var fontSizeRemover = rangy.createCssClassApplier('fontsize_\\d{1,3}\\s*', {
+    var fontSizeRemover = rangy.createCssClassApplier('\\s*fontsize_\\d{1,3}\\s*', {
       normalize: true
     });
-    var fontFamilyRemover = rangy.createCssClassApplier('fontfamily_[^_]+\\s*', {
+    var fontFamilyRemover = rangy.createCssClassApplier('\\s*fontfamily_[^_]+\\s*', {
       normalize: true
     });
     $scope.fontDropdownOpened = false;
@@ -139,7 +139,7 @@ angular.module('svgTextEditor')
     };
 
     var attachPasteHandler = function() {
-      $('#editor').on('paste', function(e) {
+      $('#editor').on('paste', function() {
         // Hard to make this work, does not divide elements
         // console.log(e.target);
         // var text = e.originalEvent.clipboardData.getData('Text');

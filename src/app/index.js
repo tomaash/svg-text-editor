@@ -8,8 +8,17 @@ angular.module('svgTextEditor', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitiz
         url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
+      })
+      .state('foo', {
+        url: '/foo',
+        templateUrl: 'app/main/main.html',
+        controller: 'MainCtrl'
+      })
+      .state('rectangle', {
+        url: '/rectangle',
+        templateUrl: 'app/rectangle/rectangle.html',
+        controller: 'RectangleCtrl'
       });
-
     $urlRouterProvider.otherwise('/');
   })
 ;
