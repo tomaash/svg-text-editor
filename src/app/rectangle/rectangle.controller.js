@@ -1,8 +1,13 @@
 'use strict';
 
 angular.module('svgTextEditor')
-  .controller('RectangleCtrl', function($scope, Mouse) {
-    console.log(Mouse.state);
+  .controller('RectangleCtrl', function($scope, Mouse, Move, Resize) {
+
+    $scope.Mouse = Mouse;
+
+    var TOOLS = {
+      'resize': Resize
+    };
 
     var RECT_TEMPLATE = {
       shapeId: 123,
@@ -99,10 +104,10 @@ angular.module('svgTextEditor')
         toolState: {
           on: false,
           visibility: 'hidden',
-          mode: false
+          mode: false,
+          service: null
         }
       }
-
     };
 
     $scope.contexts = {
@@ -110,11 +115,16 @@ angular.module('svgTextEditor')
       124: {}
     };
 
-    var MOVE_STEP = 5;
-    var SCALE_STEP = 1.5;
-
     var getContext = function() {
-      return $scope.contexts[$scope.rect.shapeId];
+      return $scope.contexts[$scope.currentShape.shapeId];
+    };
+
+    var getTool = function() {
+      return $scope.currentShape.toolState.service;
+    };
+
+    var setTool = function(tool) {
+      $scope.currentShape.toolState.service = tool;
     };
 
     var randomInt = function(radix) {
@@ -125,64 +135,40 @@ angular.module('svgTextEditor')
       var newId = randomInt();
       var newRect = angular.copy(RECT_TEMPLATE);
       newRect.shapeId = newId;
-      newRect.x = 2*randomInt(100);
-      newRect.y = 2*randomInt(100);
-      $scope.shapes[newId] = newRect; 
-    };
-
-    $scope.moveToDelta = function() {
-      $scope.rect.x = $scope.oldRect.x + Mouse.state.deltaX;
-      $scope.rect.y = $scope.oldRect.y + Mouse.state.deltaY;
-    };
-    $scope.resizeToDelta = function() {
-      $scope.rect.width = $scope.oldRect.width + Mouse.state.deltaX;
-      $scope.rect.height = $scope.oldRect.height + Mouse.state.deltaY;
-    };
-
-    $scope.moveUp = function() {
-      $scope.rect.y -= MOVE_STEP;
-    };
-    $scope.moveDown = function() {
-      $scope.rect.y += MOVE_STEP;
-    };
-    $scope.moveLeft = function() {
-      $scope.rect.x -= MOVE_STEP;
-    };
-    $scope.moveRight = function() {
-      $scope.rect.x += MOVE_STEP;
-    };
-
-    $scope.scaleUp = function() {
-      $scope.rect.width = $scope.rect.width * SCALE_STEP;
-      $scope.rect.height = $scope.rect.height * SCALE_STEP;
-    };
-
-    $scope.scaleDown = function() {
-      $scope.rect.width = $scope.rect.width / SCALE_STEP;
-      $scope.rect.height = $scope.rect.height / SCALE_STEP;
+      newRect.x = 2 * randomInt(100);
+      newRect.y = 2 * randomInt(100);
+      $scope.shapes[newId] = newRect;
     };
 
     $scope.selectShape = function(e) {
-      console.log(e.target.dataset.id);
       if (e.target.dataset.id) {
-        $scope.rect = $scope.shapes[e.target.dataset.id] || $scope.shapes[e.target.dataset.parent];
+        $scope.currentShape = $scope.shapes[e.target.dataset.id] || $scope.shapes[e.target.dataset.parent];
       }
     };
 
     $scope.mouseDown = function(e) {
       Mouse.mouseDown(e);
+      if ($scope.currentShape && $scope.currentShape.shapeId &&
+        (e.target.dataset.id != $scope.currentShape.shapeId) &&
+        (e.target.dataset.parent != $scope.currentShape.shapeId)
+      ) {
+        getContext().hideTools();
+      }
       $scope.selectShape(e);
-      if (e.target.dataset.type) {
-        $scope.oldRect = angular.copy($scope.rect);
-      }
       if (e.target.dataset.type === 'tool') {
-        $scope.rect.toolState.mode = e.target.dataset.mode;
+        setTool(TOOLS[e.target.dataset.mode]);
+      } else if (e.target.dataset.type) {
+        setTool(Move);
+      } else {
+        return;
       }
+      getTool().start($scope.currentShape);
     };
 
     $scope.mouseUp = function(e) {
       if (Mouse.state.moving) {
         getContext().hideTools();
+        getTool().finish();
       }
       Mouse.mouseUp(e);
     };
@@ -190,12 +176,8 @@ angular.module('svgTextEditor')
     $scope.mouseMove = function(e) {
       Mouse.mouseMove(e);
       if (Mouse.state.down) {
-        if (!$scope.rect.toolState.mode) {
-          $scope.moveToDelta();
-        } else if ($scope.rect.toolState.mode === 'resize') {
-          $scope.resizeToDelta();
-        }
-        if ($scope.rect.toolState.on) {
+        if (getTool()) {
+          getTool().mouseMove();
           getContext().updateToolPositions();
         }
       }
@@ -203,13 +185,15 @@ angular.module('svgTextEditor')
 
     $scope.mouseClick = function(e) {
       if (Mouse.click(e)) {
+        if ($scope.currentShape.shapeId && (e.target.dataset.id != $scope.currentShape.shapeId + "")) {
+          getContext().hideTools();
+        }
         $scope.selectShape(e);
-        console.log(e.target.dataset);
         if (!e.target.dataset.type) {
           getContext().hideTools();
         }
         if (e.target.dataset.type === 'object') {
-          if ($scope.rect.toolState.on) {
+          if ($scope.currentShape.toolState.on) {
             getContext().hideTools();
           } else {
             getContext().showTools();

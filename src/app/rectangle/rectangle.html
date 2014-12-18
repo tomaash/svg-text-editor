@@ -1,5 +1,5 @@
 <div class="container">
-	<h1>The Rectangle {{message}}</h1>
+	<h1>The Rectangles</h1>
 	<svg 
 	ng-mousedown="mouseDown($event)"
 	ng-mouseup="mouseUp($event)"
@@ -12,31 +12,18 @@
 	xmlns:xlink="http://www.w3.org/1999/xlink">
 	<g ng-repeat="(key, model) in shapes" track by $index>
 	<g rectshape viewmodel="model" context="contexts[key]" ng-if="model.shapeType=='rectshape'"></g>
-	</g>
+</g>
 </svg>
 <div>
-	<button class="btn btn-mini btn-danger" ng-click="addRect()">ADD</button>
+	<button class="btn btn-mini btn-danger" ng-click="addRect()">ADD RECTANGLE</button>
 </div>
 <br>
 <div>
-	<button class="btn btn-mini" ng-click="moveUp()">UP</button>
-	<button class="btn btn-mini" ng-click="moveDown()">DOWN</button>
-	<button class="btn btn-mini" ng-click="moveLeft()">LEFT</button>
-	<button class="btn btn-mini" ng-click="moveRight()">RIGHT</button>
-</div>
-<br>
-<div>
-	<button class="btn btn-mini" ng-click="scaleUp()">SCALE UP</button>
-	<button class="btn btn-mini" ng-click="scaleDown()">SCALE DOWN</button>
-</div>
-<br>
-<div>
-Start X: {{mouseState.startX}} <br>
-Start Y: {{mouseState.startY}} <br>
-Current X: {{mouseState.currentX}} <br>
-Current Y: {{mouseState.currentY}} <br>
-dx: {{mouseDelta.x}} <br>
-dy: {{mouseDelta.y}} <br>
-mode: {{toolState.mode}} <br>
+	Start X: {{Mouse.state.startX}} <br>
+	Start Y: {{Mouse.state.startY}} <br>
+	Current X: {{Mouse.state.currentX}} <br>
+	Current Y: {{Mouse.state.currentY}} <br>
+	dx: {{Mouse.state.deltaX}} <br>
+	dy: {{Mouse.state.deltaX}} <br>
 </div>
 </div>

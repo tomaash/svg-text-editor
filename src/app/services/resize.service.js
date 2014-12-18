@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('svgTextEditor')
-  .factory('Move', function(Mouse) {
+  .factory('Resize', function(Mouse) {
     var currentShape, oldShape;
     var start = function (shape) {
       currentShape = shape;
@@ -9,8 +9,8 @@ angular.module('svgTextEditor')
     };
 
     var mouseMove = function () {
-      currentShape.x = oldShape.x + Mouse.state.deltaX;
-      currentShape.y = oldShape.y + Mouse.state.deltaY;
+      currentShape.width = oldShape.width + Mouse.state.deltaX;
+      currentShape.height = oldShape.height + Mouse.state.deltaY;
     };
 
     var finish = function () {

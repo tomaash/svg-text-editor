@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('svgTextEditor')
-	.factory('Mouse', function($timeout) {
+	.factory('Mouse', function() {
 
 		var state = {
 			down: false,
@@ -42,6 +42,7 @@ angular.module('svgTextEditor')
 			state.moving = false;
 			state.down = false;
 		};
+
 		var mouseMove = function(e) {
 			if (state.down) {
 				state.moving = true;
@@ -49,6 +50,7 @@ angular.module('svgTextEditor')
 				updateDelta(e);
 			}
 		};
+
 		var click = function(e) {
 			if (state.noClick) {
 				state.noClick = false;
