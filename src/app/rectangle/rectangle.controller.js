@@ -4,6 +4,39 @@ angular.module('svgTextEditor')
   .controller('RectangleCtrl', function($scope, Mouse) {
     console.log(Mouse.state);
 
+    var RECT_TEMPLATE = {
+      shapeId: 123,
+      shapeType: 'rectshape',
+      x: 120,
+      y: 120,
+      width: 50,
+      height: 50,
+      fill: 'darkgreen',
+      stroke: 'orange',
+      'stroke-width': 10,
+      resizeTool: {
+        x: 110,
+        y: 110,
+        width: 10,
+        height: 10,
+        stroke: 'black',
+        'stroke-width': 2
+      },
+      rotateTool: {
+        cx: 60,
+        cy: 130,
+        width: 10,
+        height: 10,
+        stroke: 'black',
+        'stroke-width': 2
+      },
+      toolState: {
+        on: false,
+        visibility: 'hidden',
+        mode: false
+      }
+    };
+
     $scope.shapes = {
       123: {
         shapeId: 123,
@@ -73,8 +106,8 @@ angular.module('svgTextEditor')
     };
 
     $scope.contexts = {
-      123:{},
-      124:{}
+      123: {},
+      124: {}
     };
 
     var MOVE_STEP = 5;
@@ -82,6 +115,19 @@ angular.module('svgTextEditor')
 
     var getContext = function() {
       return $scope.contexts[$scope.rect.shapeId];
+    };
+
+    var randomInt = function(radix) {
+      return Math.round(Math.random() * (radix || 1000000));
+    };
+
+    $scope.addRect = function() {
+      var newId = randomInt();
+      var newRect = angular.copy(RECT_TEMPLATE);
+      newRect.shapeId = newId;
+      newRect.x = 2*randomInt(100);
+      newRect.y = 2*randomInt(100);
+      $scope.shapes[newId] = newRect; 
     };
 
     $scope.moveToDelta = function() {

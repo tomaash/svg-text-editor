@@ -6,15 +6,18 @@
 	ng-mousemove="mouseMove($event)"
 	ng-click="mouseClick($event)"
 
-	height="400" 
-	width="400" 
+	height="600" 
+	width="600" 
 	xmlns="http://www.w3.org/2000/svg" 
 	xmlns:xlink="http://www.w3.org/1999/xlink">
 	<g ng-repeat="(key, model) in shapes" track by $index>
 	<g rectshape viewmodel="model" context="contexts[key]" ng-if="model.shapeType=='rectshape'"></g>
 	</g>
 </svg>
-
+<div>
+	<button class="btn btn-mini btn-danger" ng-click="addRect()">ADD</button>
+</div>
+<br>
 <div>
 	<button class="btn btn-mini" ng-click="moveUp()">UP</button>
 	<button class="btn btn-mini" ng-click="moveDown()">DOWN</button>
