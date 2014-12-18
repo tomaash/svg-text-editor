@@ -33,6 +33,15 @@ gulp.task('scripts', function () {
     .pipe($.size());
 });
 
+gulp.task('inject', function () {
+  var target = gulp.src('src/index.html');
+  var sources = gulp.src('{app,components}/**/*.js',{cwd:'src/', relative:true}).pipe($.angularFilesort());
+  return target
+    .pipe($.inject(sources
+      ))
+    .pipe(gulp.dest('src'));
+});
+
 gulp.task('partials', function () {
   return gulp.src('src/{app,components}/**/*.html')
     .pipe($.minifyHtml({
@@ -121,4 +130,4 @@ gulp.task('clean', function (done) {
   $.del(['.tmp', 'dist'], done);
 });
 
-gulp.task('build', ['html', 'fonts', 'misc']);
+gulp.task('build', ['html', 'fonts', 'misc', 'scripts', 'inject']);

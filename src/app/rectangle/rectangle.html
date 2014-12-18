@@ -1,5 +1,4 @@
 <div class="container">
-
 	<h1>The Rectangle {{message}}</h1>
 	<svg 
 	ng-mousedown="mouseDown($event)"
@@ -11,49 +10,9 @@
 	width="400" 
 	xmlns="http://www.w3.org/2000/svg" 
 	xmlns:xlink="http://www.w3.org/1999/xlink">
-	<rect
-		data-type="object"
-		data-shape="rectangle"  
-		data-id="123"
-		ng-attr-x="{{rect.x}}" 
-		ng-attr-y="{{rect.y}}" 
-		ng-attr-width="{{rect.width}}" 
-		ng-attr-height="{{rect.height}}" 
-		ng-attr-fill="{{rect.fill}}" 
-		ng-attr-stroke-width="{{rect['stroke-width']}}" 
-		ng-attr-stroke="{{rect.stroke}}">
-	</rect>
-	<rect
-		data-type="tool"
-		data-mode="resize"
-		data-id="789"
-		data-parent="123" 
-		fill="white"
-		fill-opacity="0"
-		ng-attr-x="{{resizeTool.x}}" 
-		ng-attr-y="{{resizeTool.y}}" 
-		ng-attr-width="{{resizeTool.width}}" 
-		ng-attr-height="{{resizeTool.height}}" 
-		ng-attr-stroke-width="{{resizeTool['stroke-width']}}" 
-		ng-attr-stroke="{{resizeTool.stroke}}"
-		ng-attr-visibility="{{toolState.visibility}}">
-	</rect>
-	<circle
-		data-type="tool"
-		data-mode="rotate"
-		data-id="456"
-		data-parent="123" 
-		fill="white"
-		fill-opacity="0"
-		r="7" 
-		ng-attr-cx="{{rotateTool.cx}}" 
-		ng-attr-cy="{{rotateTool.cy}}" 
-		ng-attr-fill="{{rotateTool.fill}}" 
-		ng-attr-stroke-width="{{rotateTool['stroke-width']}}" 
-		ng-attr-stroke="{{rotateTool.stroke}}"
-		ng-attr-visibility="{{toolState.visibility}}">
-	</circle>
-
+	<g ng-repeat="(key, model) in shapes" track by $index>
+	<g rectshape viewmodel="model" context="contexts[key]" ng-if="model.shapeType=='rectshape'"></g>
+	</g>
 </svg>
 
 <div>
