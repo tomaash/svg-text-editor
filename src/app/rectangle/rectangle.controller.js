@@ -185,9 +185,6 @@ angular.module('svgTextEditor')
 
     $scope.mouseClick = function(e) {
       if (Mouse.click(e)) {
-        if ($scope.currentShape.shapeId && (e.target.dataset.id != $scope.currentShape.shapeId + "")) {
-          getContext().hideTools();
-        }
         $scope.selectShape(e);
         if (!e.target.dataset.type) {
           getContext().hideTools();
