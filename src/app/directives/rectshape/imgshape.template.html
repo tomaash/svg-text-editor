@@ -1,0 +1,39 @@
+<image
+	data-type="object"
+	data-shape="image"  
+	data-id="{{viewmodel.shapeId}}"
+	ng-attr-x="{{viewmodel.x}}" 
+	ng-attr-y="{{viewmodel.y}}" 
+	ng-attr-width="{{viewmodel.width}}" 
+	ng-attr-height="{{viewmodel.height}}"
+	xlink:href="{{viewmodel.href}}"></image> 
+<rect
+	data-type="tool"
+	data-mode="resize"
+	data-id="789"
+	data-parent="{{viewmodel.shapeId}}" 
+	fill="white"
+	fill-opacity="0"
+	ng-attr-x="{{viewmodel.resizeTool.x}}" 
+	ng-attr-y="{{viewmodel.resizeTool.y}}" 
+	ng-attr-width="{{viewmodel.resizeTool.width}}" 
+	ng-attr-height="{{viewmodel.resizeTool.height}}" 
+	ng-attr-stroke-width="{{viewmodel.resizeTool['stroke-width']}}" 
+	ng-attr-stroke="{{viewmodel.resizeTool.stroke}}"
+	ng-attr-visibility="{{viewmodel.toolState.visibility}}">
+</rect>
+<circle
+	data-type="tool"
+	data-mode="rotate"
+	data-id="456"
+	data-parent="{{viewmodel.shapeId}}" 
+	fill="white"
+	fill-opacity="0"
+	r="7" 
+	ng-attr-cx="{{viewmodel.rotateTool.cx}}" 
+	ng-attr-cy="{{viewmodel.rotateTool.cy}}" 
+	ng-attr-fill="{{viewmodel.rotateTool.fill}}" 
+	ng-attr-stroke-width="{{viewmodel.rotateTool['stroke-width']}}" 
+	ng-attr-stroke="{{viewmodel.rotateTool.stroke}}"
+	ng-attr-visibility="{{viewmodel.toolState.visibility}}">
+</circle>

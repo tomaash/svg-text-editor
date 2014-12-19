@@ -1,21 +1,31 @@
 <div class="container">
 	<h1>The Rectangles</h1>
-	<svg 
-	ng-mousedown="mouseDown($event)"
-	ng-mouseup="mouseUp($event)"
-	ng-mousemove="mouseMove($event)"
-	ng-click="mouseClick($event)"
 
-	height="600" 
-	width="600" 
-	xmlns="http://www.w3.org/2000/svg" 
-	xmlns:xlink="http://www.w3.org/1999/xlink">
-	<g ng-repeat="(key, model) in shapes" track by $index>
+	<div class="gallery">
+		<div ng-repeat="img in galleryImages">
+			<img draggable="true" effect-allowed="copy" draggable-type="custom-object" draggable-data="img.source" width="50px" ng-src="assets/images/{{img.thumbnail}}">
+		</div>
+	</div>
+
+<div class="spread" >
+<svg 
+ng-mousedown="mouseDown($event)"
+ng-mouseup="mouseUp($event)"
+ng-mousemove="mouseMove($event)"
+ng-click="mouseClick($event)"
+drop="onDrop($data, $event)" drop-effect="copy" drop-accept="'json/custom-object'" drag-over="onDragOver($event)" drag-over-class="drag-over-accept"
+height="500" 
+width="600" 
+xmlns="http://www.w3.org/2000/svg" 
+xmlns:xlink="http://www.w3.org/1999/xlink">
+<g ng-repeat="(key, model) in shapes" track by $index>
 	<g rectshape viewmodel="model" context="contexts[key]" ng-if="model.shapeType=='rectshape'"></g>
+	<g imgshape viewmodel="model" context="contexts[key]" ng-if="model.shapeType=='imgshape'"></g>
 </g>
 </svg>
 <div>
-	<button class="btn btn-mini btn-danger" ng-click="addRect()">ADD RECTANGLE</button>
+	<button class="btn btn-mini btn-success" ng-click="addRect()">ADD RECTANGLE</button>
+	<button class="btn btn-mini btn-danger" ng-click="removeSelected()">REMOVE</button>
 </div>
 <br>
 <div>
@@ -25,5 +35,6 @@
 	Current Y: {{Mouse.state.currentY}} <br>
 	dx: {{Mouse.state.deltaX}} <br>
 	dy: {{Mouse.state.deltaX}} <br>
+</div>
 </div>
 </div>

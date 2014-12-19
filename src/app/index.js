@@ -1,7 +1,7 @@
 'use strict';
 rangy.init();
 
-angular.module('svgTextEditor', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'restangular', 'ui.router', 'ui.bootstrap'])
+angular.module('svgTextEditor', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'restangular', 'ui.router', 'ui.bootstrap', 'draganddrop'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {

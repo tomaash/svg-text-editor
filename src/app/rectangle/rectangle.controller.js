@@ -115,8 +115,21 @@ angular.module('svgTextEditor')
       124: {}
     };
 
+    $scope.galleryImages = [{
+      source: "schoolgirl.jpg",
+      thumbnail: "schoolgirl_thumb.jpg"
+    }, {
+      source: "chibi.jpg",
+      thumbnail: "chibi_thumb.jpg"
+    }, {
+      source: "mugen.jpg",
+      thumbnail: "mugen_thumb.jpg"
+    }];
+
     var getContext = function() {
-      return $scope.contexts[$scope.currentShape.shapeId];
+      if ($scope.currentShape) {
+        return $scope.contexts[$scope.currentShape.shapeId];
+      }
     };
 
     var getTool = function() {
@@ -131,6 +144,27 @@ angular.module('svgTextEditor')
       return Math.round(Math.random() * (radix || 1000000));
     };
 
+    $scope.onDrop = function(data, event) {
+      console.log(data);
+      var x = event.offsetX;
+      var y = event.offsetY;
+      var newId = randomInt();
+      var newRect = angular.copy(RECT_TEMPLATE);
+      newRect.shapeId = newId;
+      newRect.width = 100;
+      newRect.height = 100;
+      newRect.x = x - 50;
+      newRect.y = y - 50;
+      newRect.href = '/assets/images/' + data['json/custom-object'];
+      newRect.shapeType = 'imgshape';
+      $scope.shapes[newId] = newRect;
+    };
+
+    $scope.onDragOver = function(data, event) {
+      // console.log(data);
+      // console.log(event);
+    };
+
     $scope.addRect = function() {
       var newId = randomInt();
       var newRect = angular.copy(RECT_TEMPLATE);
@@ -138,6 +172,10 @@ angular.module('svgTextEditor')
       newRect.x = 2 * randomInt(100);
       newRect.y = 2 * randomInt(100);
       $scope.shapes[newId] = newRect;
+    };
+
+    $scope.removeSelected = function() {
+      delete $scope.shapes[$scope.currentShape.shapeId];
     };
 
     $scope.selectShape = function(e) {
@@ -186,14 +224,16 @@ angular.module('svgTextEditor')
     $scope.mouseClick = function(e) {
       if (Mouse.click(e)) {
         $scope.selectShape(e);
-        if (!e.target.dataset.type) {
-          getContext().hideTools();
-        }
-        if (e.target.dataset.type === 'object') {
-          if ($scope.currentShape.toolState.on) {
+        if (getContext()) {
+          if (!e.target.dataset.type) {
             getContext().hideTools();
-          } else {
-            getContext().showTools();
+          }
+          if (e.target.dataset.type === 'object') {
+            if ($scope.currentShape.toolState.on) {
+              getContext().hideTools();
+            } else {
+              getContext().showTools();
+            }
           }
         }
       }
