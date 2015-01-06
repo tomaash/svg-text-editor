@@ -1,7 +1,7 @@
 <div class="container">
 
   <!-- <div ng-include="'components/navbar/navbar.html'"></div> -->
- 
+
   <h1>Rich text editor with SVG export</h1>
   <a href="/#/rectangle">Rectangle sample</a>
   <br>
@@ -9,22 +9,22 @@
   <div class="editor-stuff" ng-show="editMode">
 <!--   <button class="btn btn-mini" ng-click="toggleBold()">B</button>
   <button class="btn btn-mini" ng-click="toggleItalic()">I</button>
- -->  <span class="dropdown" dropdown on-toggle="toggled(open)">
-    <a href class="btn btn-default dropdown-toggle" dropdown-toggle >Font</a>
-    <ul class="dropdown-menu">
-      <li ng-repeat="font in fonts">
-        <a href ng-click="toggleFont('{{font.tag}}')">
-          <span class="fontfamily_{{font.tag}}">{{font.name}}</span>
-        </a>
-      </li>
-    </ul>
-  </span>
-  &nbsp; Size:&nbsp; <select ng-model="fontSize" ng-change="toggleSize()" ng-options="size for size in sizes"></select>
-  &nbsp; <button class="btn btn-primary" ng-click="generateSVG()">Apply</button>
-  </div>
-  <div class="view-stuff" ng-hide="editMode">
+-->  <span class="dropdown" dropdown on-toggle="toggled(open)">
+<a href class="btn btn-default dropdown-toggle" dropdown-toggle >Font</a>
+<ul class="dropdown-menu">
+  <li ng-repeat="font in SvgText.FONT_FACES">
+  <a href ng-click="toggleFont('{{font.tag}}')">
+  <span class="fontfamily_{{font.tag}}">{{font.name}}</span>
+</a>
+</li>
+</ul>
+</span>
+&nbsp; Size:&nbsp; <select ng-model="fontSize" ng-change="toggleSize()" ng-options="size for size in SvgText.FONT_SIZES"></select>
+&nbsp; <button class="btn btn-primary" ng-click="toggleViewMode()">Apply</button>
+</div>
+<div class="view-stuff" ng-hide="editMode">
   <button class="btn btn-warning" ng-click="toggleEditMode()">Edit</button>
-  </div>
+</div>
 <!--   <span class="fontfamily_cochise fontsize_20">f</span>
     <span class="fontfamily_cochise   fontsize_48">o</span>
     <span class="fontfamily_cochise fontsize_20">o</span><div>
@@ -42,22 +42,31 @@
       <span class="fontfamily_cochise fontsize_20">z</span>
     </div>
   </div>
- -->
+-->
 
- <!-- <span class="fontfamily_cochise fontsize_20">Please type here</span> -->
-  
-  <hr>
-  <div id="editor" ng-show="editMode" contenteditable="true"><span class="fontfamily_cochise fontsize_20">I </span><span class="fontsize_20 fontfamily_kaleidoskop">can</span><span class="fontfamily_cochise fontsize_20"> </span><span class="fontsize_20 fontfamily_olympiaheavy">have&nbsp;</span><div><span class="fontfamily_cochise fontsize_48">multiline</span></div><div><span class="fontfamily_tabascotwin fontsize_20">text</span></div><div><span class="fontfamily_cochise fontsize_20">with </span><span class="fontfamily_lifetime fontsize_68">different</span></div><div><span class="fontfamily_cochise fontsize_68">f</span><span class="fontsize_68 fontfamily_olympiamediumcond">o</span><span class="fontsize_68 fontfamily_kaleidoskop">n</span><span class="fontsize_68 fontfamily_checkpoint">t</span><span class="fontsize_68 fontfamily_sunflower">s</span><span class="fontfamily_cochise fontsize_20"> and </span><span class="fontfamily_cochise fontsize_100">s</span><span class="fontfamily_cochise fontsize_68">i</span><span class="fontfamily_cochise fontsize_24">z</span><span class="fontfamily_cochise fontsize_80">e</span><span class="fontfamily_cochise fontsize_36">s</span></div></div>
+<!-- <span class="fontfamily_cochise fontsize_20">Please type here</span> -->
+
+<hr>
+<div id="editor" ng-show="editMode" contenteditable="true"><span class="fontfamily_cochise fontsize_20">I </span><span class="fontsize_20 fontfamily_kaleidoskop">can</span><span class="fontfamily_cochise fontsize_20"> </span><span class="fontsize_20 fontfamily_olympia-heavy">have&nbsp;</span><div><span class="fontfamily_cochise fontsize_48">multiline</span></div><div><span class="fontfamily_tabascotwin fontsize_20">text</span></div><div><span class="fontfamily_cochise fontsize_20">with </span><span class="fontfamily_lifetime fontsize_68">different</span></div><div><span class="fontfamily_cochise fontsize_68">f</span><span class="fontsize_68 fontfamily_olympia-mediumcond">o</span><span class="fontsize_68 fontfamily_kaleidoskop">n</span><span class="fontsize_68 fontfamily_checkpoint">t</span><span class="fontsize_68 fontfamily_sunflower">s</span><span class="fontfamily_cochise fontsize_20"> and </span><span class="fontfamily_cochise fontsize_100">s</span><span class="fontfamily_cochise fontsize_68">i</span><span class="fontfamily_cochise fontsize_24">z</span><span class="fontfamily_cochise fontsize_80">e</span><span class="fontfamily_cochise fontsize_36">s</span></div></div>
 <!--   <hr>
   <h3 class="output">SVG Output</h3>
   <hr>
- -->  <div ng-hide="editMode">
-  <svg class="svgcontainer" id="svgoutput" xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
-      <text xml:space="preserve" ng-attr-y="{{line.data.dy}}" x="0" ng-repeat="line in lines" ng-attr-style="visibility:{{line.data.visible && 'visible' || 'hidden'}};"><tspan class="fontfamily_{{part.fontfamily}} fontsize_{{part.fontsize}}" ng-repeat="part in line.spans">{{part.text}}</tspan>
-    </text>
-  </svg>
-  </div>
-  <div class="footer"><p></p>
-  </div>
+-->  <div ng-hide="editMode">
+<svg class="svgcontainer" id="svgoutput" xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink">
+</svg>
+
+<!-- <svg class="svgcontainer" xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink">
+  <text xml:space="preserve" ng-attr-y="{{line.data.dy}}" x="0" ng-repeat="line in lines" >
+  
+    <tspan class="fontfamily_{{part.fontfamily}} fontsize_{{part.fontsize}}" ng-repeat="part in line.spans">{{part.text}}</tspan>
+  </text>
+</svg>
+ -->
+ 
+<!-- ng-attr-style="visibility:{{line.data.visible && 'visible' || 'hidden'}};" -->
+
+</div><div class="footer"><p></p>
+</div>
 </div>
