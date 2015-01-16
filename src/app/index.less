@@ -30,7 +30,7 @@
 }
 
 .tools {
-   float: left;
+ float: left;
 }
 
 .svgcontainer {
@@ -94,17 +94,248 @@ h1 {
   font-family: "TabascoTwin Regular";
 }
 .fontfamily_times {
-    font-family: "Times";
+  font-family: "Times";
 }
 .fontfamily_times-bold {
-    font-family: "Times-Bold";
+  font-family: "Times-Bold";
 }
 .fontfamily_times-bold-italic { 
-    font-family: "Times-Bold Italic";
+  font-family: "Times-Bold Italic";
 }
 .fontfamily_times-italic {
-    font-family: "Times-Italic";
+  font-family: "Times-Italic";
 }
+
+/* colors */
+
+.colorswrap {
+
+  border: 2px solid #444;
+  width: 17px;
+  height: 17px;
+  z-index: 20;
+}
+.textcolors .colorswrap,
+.strokecolors .colorswrap {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+}
+#colorPicked {
+  position: absolute;
+  width: 7px; 
+  height: 7px; 
+  padding: 5px; 
+  display: inline-block; 
+  cursor: pointer;
+  right: 0px;
+  top: 0px;
+  z-index: 40;
+}
+
+
+#strokeColorPicked {
+  position: absolute;
+  padding: 2px;
+  display: inline-block;
+  cursor: pointer;
+  right: 0px;
+  top: 0px;
+  -webkit-box-shadow: 0px 0px 0px 1px #000 inset;
+  -moz-box-shadow: 0px 0px 0px 1px #000 inset;
+  box-shadow: 0px 0px 0px 1px #000 inset;
+  width: 3px;
+  height: 3px;
+  z-index: 40;
+}
+
+.colorpicker {
+  padding: 5px;
+  display: inline-block
+}
+.colorslist {
+    // position: absolute;
+    // top: -24px;
+    // left: 74px;
+    width: 228px;
+    // margin: 0;
+    // margin-top: 22px;
+    padding: 0;
+    display: none;
+    display: block;
+    background: #333;
+    line-height: 0px;
+    border: 1px solid #000;
+    z-index: 620;
+    /*    padding: 5px; display: inline-block;*/
+  }
+  .strokecolors .colorslist {
+    left: 18px;
+  }
+  #colorPicked:hover .colorslist {
+    display: block;
+    
+  }
+
+  #strokeColorPicked:hover .colorslist {
+    display: block;
+    
+  }
+
+  .colorslist span {
+    padding: 0;
+    margin: 0;
+  }
+  .colorslist span.coloroption {
+    width: 7px; 
+    height: 7px; 
+    padding: 5px;
+    display: inline-block;
+  }
+
+  .strokecolors .colorslist {
+    left: 18px;
+  }
+  #colorPicked:hover .colorslist {
+    display: block;
+    
+  }
+
+  #strokeColorPicked:hover .colorslist {
+    display: block;
+    
+  }
+
+  .colorslist span {
+    padding: 0;
+    margin: 0;
+  }
+  .colorslist span.coloroption {
+    width: 7px; 
+    height: 7px; 
+    padding: 5px;
+    display: inline-block;
+  }
+  /* align */
+
+  .align_start { text-align: left;}
+  .align_end { text-align: right;}
+  .align_middle { text-align: center;}
+
+  /* stroke width */
+
+  .fontstrokewidth_0 { -webkit-text-stroke-width: 0;}
+  .fontstrokewidth_1 { -webkit-text-stroke-width: 1px;}
+  .fontstrokewidth_2 { -webkit-text-stroke-width: 2px;}
+  .fontstrokewidth_3 { -webkit-text-stroke-width: 3px;}
+  .fontstrokewidth_4 { -webkit-text-stroke-width: 4px;}
+  .fontstrokewidth_5 { -webkit-text-stroke-width: 5px;}
+
+  /* balfour colors */
+
+  .fontcolor_1  { color: rgb(255,0,0);}
+  .fontcolor_2  { color: rgb(237,194,125);}
+  .fontcolor_3  { color: rgb(0,0,0);}
+  .fontcolor_4  { color: rgb(255,0,77);}
+  .fontcolor_5  { color: rgb(15,30,104);}
+  .fontcolor_6  { color: rgb(255,194,0);}
+  .fontcolor_7  { color: rgb(194,25,255);}
+  .fontcolor_8  { color: rgb(211,117,164);}
+  .fontcolor_9  { color: rgb(120,15,186);}
+  .fontcolor_10 { color: rgb(0,158,103);}
+  .fontcolor_11 { color: rgb(179,80,54);}
+  .fontcolor_12 { color: rgb(150,152,151);}
+  .fontcolor_13 { color: rgb(167,134,81);}
+  .fontcolor_14 { color: rgb(0,179,125);}
+  .fontcolor_15 { color: rgb(153,112,140);}
+  .fontcolor_16 { color: rgb(0,64,53);}
+  .fontcolor_17 { color: rgb(0,152,79);}
+  .fontcolor_18 { color: rgb(182,136,189);}
+  .fontcolor_19 { color: rgb(122,38,44);}
+  .fontcolor_20 { color: rgb(0,27,80);}
+  .fontcolor_21 { color: rgb(164,217,206);}
+  .fontcolor_22 { color: rgb(140,117,181);}
+  .fontcolor_23 { color: rgb(226,56,45);}
+  .fontcolor_24 { color: rgb(0,174,239);}
+  .fontcolor_25 { color: rgb(236,0,140);}
+  .fontcolor_26 { color: rgb(255,242,0);}
+  .fontcolor_27 { color: rgb(195,36,80);}
+  .fontcolor_28 { color: rgb(89,58,150);}
+  .fontcolor_29 { color: rgb(247,156,133);}
+  .fontcolor_30 { color: rgb(0,75,140);}
+  .fontcolor_31 { color: rgb(120,53,49);}
+  .fontcolor_32 { color: rgb(150,152,151);}
+  .fontcolor_33 { color: rgb(185,173,155);}
+  .fontcolor_34 { color: rgb(245,130,32);}
+  .fontcolor_35 { color: rgb(0,95,169);}
+  .fontcolor_36 { color: rgb(0,167,165);}
+  .fontcolor_37 { color: rgb(129,56,66);}
+  .fontcolor_38 { color: rgb(68,153,180);}
+  .fontcolor_39 { color: rgb(255,255,255);}
+  .fontcolor_40 { color: rgb(128,185,188);}
+  .fontcolor_41 { color: rgb(252,175,23);}
+  .fontcolor_42 { color: rgb(0,166,82);}
+  .fontcolor_43 { color: rgb(167,207,58);}
+  .fontcolor_44 { color: rgb(237,22,81);}
+  .fontcolor_45 { color: rgb(119,112,180);}
+  .fontcolor_46 { color: rgb(255,221,0);}
+  .fontcolor_47 { color: rgb(79,199,224);}
+
+  .fontstrokecolor_1 { -webkit-text-stroke-color: rgb(255,0,0);}
+  .fontstrokecolor_2 { -webkit-text-stroke-color: rgb(237,194,125);}
+  .fontstrokecolor_3 { -webkit-text-stroke-color: rgb(0,0,0);}
+  .fontstrokecolor_4 { -webkit-text-stroke-color: rgb(255,0,77);}
+  .fontstrokecolor_5 { -webkit-text-stroke-color: rgb(15,30,104);}
+  .fontstrokecolor_6 { -webkit-text-stroke-color: rgb(255,194,0);}
+  .fontstrokecolor_7 { -webkit-text-stroke-color: rgb(194,25,255);}
+  .fontstrokecolor_8 { -webkit-text-stroke-color: rgb(211,117,164);}
+  .fontstrokecolor_9 { -webkit-text-stroke-color: rgb(120,15,186);}
+  .fontstrokecolor_10 { -webkit-text-stroke-color: rgb(0,158,103);}
+  .fontstrokecolor_11 { -webkit-text-stroke-color: rgb(179,80,54);}
+  .fontstrokecolor_12 { -webkit-text-stroke-color: rgb(150,152,151);}
+  .fontstrokecolor_13 { -webkit-text-stroke-color: rgb(167,134,81);}
+  .fontstrokecolor_14 { -webkit-text-stroke-color: rgb(0,179,125);}
+  .fontstrokecolor_15 { -webkit-text-stroke-color: rgb(153,112,140);}
+  .fontstrokecolor_16 { -webkit-text-stroke-color: rgb(0,64,53);}
+  .fontstrokecolor_17 { -webkit-text-stroke-color: rgb(0,152,79);}
+  .fontstrokecolor_18 { -webkit-text-stroke-color: rgb(182,136,189);}
+  .fontstrokecolor_19 { -webkit-text-stroke-color: rgb(122,38,44);}
+  .fontstrokecolor_20 { -webkit-text-stroke-color: rgb(0,27,80);}
+  .fontstrokecolor_21 { -webkit-text-stroke-color: rgb(164,217,206);}
+  .fontstrokecolor_22 { -webkit-text-stroke-color: rgb(140,117,181);}
+  .fontstrokecolor_23 { -webkit-text-stroke-color: rgb(226,56,45);}
+  .fontstrokecolor_24 { -webkit-text-stroke-color: rgb(0,174,239);}
+  .fontstrokecolor_25 { -webkit-text-stroke-color: rgb(236,0,140);}
+  .fontstrokecolor_26 { -webkit-text-stroke-color: rgb(255,242,0);}
+  .fontstrokecolor_27 { -webkit-text-stroke-color: rgb(195,36,80);}
+  .fontstrokecolor_28 { -webkit-text-stroke-color: rgb(89,58,150);}
+  .fontstrokecolor_29 { -webkit-text-stroke-color: rgb(247,156,133);}
+  .fontstrokecolor_30 { -webkit-text-stroke-color: rgb(0,75,140);}
+  .fontstrokecolor_31 { -webkit-text-stroke-color: rgb(120,53,49);}
+  .fontstrokecolor_32 { -webkit-text-stroke-color: rgb(150,152,151);}
+  .fontstrokecolor_33 { -webkit-text-stroke-color: rgb(185,173,155);}
+  .fontstrokecolor_34 { -webkit-text-stroke-color: rgb(245,130,32);}
+  .fontstrokecolor_35 { -webkit-text-stroke-color: rgb(0,95,169);}
+  .fontstrokecolor_36 { -webkit-text-stroke-color: rgb(0,167,165);}
+  .fontstrokecolor_37 { -webkit-text-stroke-color: rgb(129,56,66);}
+  .fontstrokecolor_38 { -webkit-text-stroke-color: rgb(68,153,180);}
+  .fontstrokecolor_39 { -webkit-text-stroke-color: rgb(255,255,255);}
+  .fontstrokecolor_40 { -webkit-text-stroke-color: rgb(128,185,188);}
+  .fontstrokecolor_41 { -webkit-text-stroke-color: rgb(252,175,23);}
+  .fontstrokecolor_42 { -webkit-text-stroke-color: rgb(0,166,82);}
+  .fontstrokecolor_43 { -webkit-text-stroke-color: rgb(167,207,58);}
+  .fontstrokecolor_44 { -webkit-text-stroke-color: rgb(237,22,81);}
+  .fontstrokecolor_45 { -webkit-text-stroke-color: rgb(119,112,180);}
+  .fontstrokecolor_46 { -webkit-text-stroke-color: rgb(255,221,0);}
+  .fontstrokecolor_47 { -webkit-text-stroke-color: rgb(79,199,224);}
+
+
+
+
+
+
+
+
 
 
 
